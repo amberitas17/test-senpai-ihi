@@ -97,6 +97,7 @@
     <div class="chat-area">
       <!-- <p id="aiResponse"></p> {/* Move aiResponse to the beginning of chat-area */} -->
       <p id="aiResponse"></p>
+      <p id="aiResponse2"></p>
       <img id="responseImage" style="max-width: 100%; margin-top: 10px;">
     </div>
     <div class="input-section">
@@ -121,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const uploadStatus = document.getElementById('uploadStatus');
   const askAiButton = document.getElementById('askAiButton');
   const aiResponse = document.getElementById('aiResponse');
+  const aiResponse2 = document.getElementById('aiResponse2');
   const userQuery = document.getElementById('userQuery');
 
   // Event listener for the file upload form submission
@@ -210,6 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.ok) {
           aiResponse.textContent = `AI Response: ${data.messages[0]?.content || 'No response available'}`;
           aiResponse.classList.add('success');
+          aiResponse2.textContent = `AI Response: ${data.messages[1]?.content || 'No response available'}`;
+          aiResponse2.classList.add('success');
   
           // If the AI response contains a base64 image string, update the image
           const base64Image = data.messages[0]?.content;  // Adjust based on your API response structure
