@@ -212,7 +212,23 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.ok) {
           aiResponse.textContent = `AI Response: ${data.messages[0]?.content || 'No response available'}`;
           aiResponse.classList.add('success');
-          aiResponse2.textContent = `AI Response: ${data.messages[1]?.content || 'No response available'}`;
+          const messageContent2 = data.messages[1]?.content || 'No response available';
+  
+          // Check if the content in data.messages[1] is a URL
+          const urlRegex = /https?:\/\/[^\s]+/; // Basic URL regex to match links
+          if (urlRegex.test(messageContent2)) {
+            const linkElement = document.createElement('a');
+            linkElement.href = messageContent2; // Set the link's href attribute to the URL
+            linkElement.textContent = 'Click here to access the link'; // Customizable link text
+            linkElement.target = '_blank'; // Open the link in a new tab
+            linkElement.rel = 'noopener noreferrer'; // Security best practice
+
+            // Append the link to the aiResponse2 element
+            aiResponse2.textContent = ''; // Clear any existing content
+            aiResponse2.appendChild(linkElement); // Add the link as a child
+          } else {
+            aiResponse2.textContent = `AI Response: ${messageContent2}`;
+          }
           aiResponse2.classList.add('success');
   
           // If the AI response contains a base64 image string, update the image
