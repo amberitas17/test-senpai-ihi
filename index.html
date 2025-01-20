@@ -215,22 +215,24 @@ document.addEventListener('DOMContentLoaded', function () {
           const messageContent2 = data.messages[1]?.content || 'No response available';
   
           // Check if the content in data.messages[1] is a URL
-          const urlRegex = /https?:\/\/[^\s]+/; // Basic URL regex to match links
-          if (urlRegex.test(messageContent2)) {
+          const urlRegex = /(https?:\/\/[^\s]+)/; // Regex to match URLs
+          const urlMatch = messageContent2.match(urlRegex);
+
+          if (urlMatch) {
+            const extractedUrl = urlMatch[0]; // Get the first URL match
             const linkElement = document.createElement('a');
-            linkElement.href = messageContent2; // Set the link's href attribute to the URL
-            linkElement.textContent = 'Click here to access the link'; // Customizable link text
-            linkElement.target = '_blank'; // Open the link in a new tab
+            linkElement.href = extractedUrl; // Set the href to the extracted URL
+            linkElement.textContent = 'Click here to download the file'; // Customizable text
+            linkElement.target = '_blank'; // Open link in a new tab
             linkElement.rel = 'noopener noreferrer'; // Security best practice
 
-            // Append the link to the aiResponse2 element
-            aiResponse2.textContent = ''; // Clear any existing content
-            aiResponse2.appendChild(linkElement); // Add the link as a child
+            aiResponse2.textContent = ''; // Clear existing content
+            aiResponse2.appendChild(linkElement); // Append the link element
           } else {
             aiResponse2.textContent = `AI Response: ${messageContent2}`;
           }
           aiResponse2.classList.add('success');
-  
+          
           // If the AI response contains a base64 image string, update the image
           const base64Image = data.messages[0]?.content;  // Adjust based on your API response structure
           if (base64Image) {
