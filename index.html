@@ -94,23 +94,22 @@
       <span class="chat-title">Chat with IHI Senpai AI</span>
       <p>Upload your data to analyze</p>
     </div>
-    <div class="chat-area">
-      <!-- <p id="aiResponse"></p> {/* Move aiResponse to the beginning of chat-area */} -->
+    <!-- <div class="chat-area">
       <p id="aiResponse"></p>
       <p id="aiResponse2"></p>
       <img id="responseImage" style="max-width: 100%; margin-top: 10px;">
-    </div>
+    </div> -->
     <div class="input-section">
       <form id="uploadForm" target="_self">
         <input type="file" id="fileInput" name="file" class = "upload-button"/>
         <button type="submit">Upload</button>
         <p id="uploadStatus"></p>
       </form>
-      <div>
+      <!-- <div>
         <input type="text" id="userQuery" placeholder="Enter your question here" />
         <button id="askAiButton" class="send-button">Ask AI</button>
         
-      </div>    
+      </div>     -->
     </div>
   </div>
 
@@ -172,79 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
       uploadStatus.textContent = `Error: ${error.message}`;
       uploadStatus.classList.add('error');
     }
-  });
-
-  // Event listener for the "Ask AI" button
-  askAiButton.addEventListener('click', async function () {
-    const uploadedFileId = localStorage.getItem('uploadedFileId');
-
-    if (!uploadedFileId) {
-      aiResponse.textContent = 'Please upload a file before asking a question.';
-      aiResponse.classList.add('error');
-      return;
-    }
-
-    if (!userQuery.value.trim()) {
-      aiResponse.textContent = 'Please enter a question.';
-      aiResponse.classList.add('error');
-      return;
-    }
-
-    try {
-      aiResponse.textContent = 'Processing your question...';
-      aiResponse.classList.remove('error');
-      aiResponse.classList.add('success');
-
-      const response = await fetch('https://ihiserversenpai.onrender.com/ask', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          file_id: uploadedFileId,
-          message: userQuery.value.trim(),
-        }),
-      });
-
-      const data = await response.json();
-      console.log(data)
-
-      if (response.ok) {
-          aiResponse.textContent = `AI Response: ${data.messages[0]?.content || 'No response available'}`;
-          aiResponse.classList.add('success');
-          const messageContent2 = data.messages[1]?.content || 'No response available';
-  
-          // Check if the content in data.messages[1] is a URL
-          const urlRegex = /(https?:\/\/[^\s]+)/; // Regex to match URLs
-          const urlMatch = messageContent2.match(urlRegex);
-
-          if (urlMatch) {
-            const extractedUrl = urlMatch[0]; // Get the first URL match
-            const linkElement = document.createElement('a');
-            linkElement.href = extractedUrl; // Set the href to the extracted URL
-            linkElement.textContent = 'Click here to download the file'; // Customizable text
-            linkElement.target = '_blank'; // Open link in a new tab
-            linkElement.rel = 'noopener noreferrer'; // Security best practice
-
-            aiResponse2.textContent = ''; // Clear existing content
-            aiResponse2.appendChild(linkElement); // Append the link element
-          } else {
-            aiResponse2.textContent = `AI Response: ${messageContent2}`;
-          }
-          aiResponse2.classList.add('success');
-          
-          // If the AI response contains a base64 image string, update the image
-          const base64Image = data.messages[0]?.content;  // Adjust based on your API response structure
-          if (base64Image) {
-            responseImage.src = 'data:image/png;base64,' + base64Image;  // Update image with base64 response
-          }
-        } else {
-          throw new Error(data.error || 'Failed to get AI response.');
-        }
-      } catch (error) {
-        aiResponse.textContent = `Error: ${error.message}`;
-        aiResponse.classList.add('error');
-      }
   });
 });
 
