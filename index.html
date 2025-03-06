@@ -137,11 +137,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const file = fileInput.files[0];
 
     // Check if the uploaded file is an .xlsx file
-    if (file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-      uploadStatus.textContent = 'Only .xlsx files are allowed.';
-      uploadStatus.classList.add('error');
-      return;
-    }
+    //if (file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+     // uploadStatus.textContent = 'Only .xlsx files are allowed.';
+      //uploadStatus.classList.add('error');
+     // return;
+    //}
 
     const formData = new FormData();
     formData.append('file', file);
