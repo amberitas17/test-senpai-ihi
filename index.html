@@ -156,16 +156,19 @@ document.addEventListener('DOMContentLoaded', function () {
         body: formData,
       });
 
-      const data = await response.json();
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
 
-      if (response.ok) {
-        uploadStatus.textContent = `File uploaded successfully! File ID: ${data.file_id}`;
-        uploadStatus.classList.add('success');
-
-        // Store the file ID for later use with the Ask AI endpoint
-        localStorage.setItem('uploadedFileId', data.file_id);
+        if (response.ok) {
+          uploadStatus.textContent = `File uploaded successfully! File ID: ${data.file_id}`;
+          uploadStatus.classList.add('success');
+          localStorage.setItem('uploadedFileId', data.file_id);
+        } else {
+          throw new Error(data.error || 'Upload failed.');
+        }
       } else {
-        throw new Error(data.error || 'Upload failed.');
+        throw new Error('Unexpected response format. Expected JSON.');
       }
     } catch (error) {
       uploadStatus.textContent = `Error: ${error.message}`;
