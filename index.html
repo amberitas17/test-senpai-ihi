@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(data.error || 'Upload failed.');
         }
       } else {
-        throw new Error('Unexpected response format. Expected JSON.');
+        throw new Error("Upload failed. Unexpected response format.");
       }
     } catch (error) {
       uploadStatus.textContent = `Error: ${error.message}`;
