@@ -198,7 +198,8 @@ audioUploadForm.addEventListener('submit', async function (event) {
 
   const file = audioFileInput.files[0];
   const formData = new FormData();
-  formData.append('audio', file);
+  formData.append('file', file);
+// filepath: c:\Users\TrACE.AI 09092021\Desktop\test-senpai-ihi\index.html
 
   try {
     audioUploadStatus.textContent = 'Uploading...';
