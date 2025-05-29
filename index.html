@@ -216,7 +216,7 @@ audioUploadForm.addEventListener('submit', async function (event) {
       const data = await response.json();
 
       if (response.ok) {
-        audioUploadStatus.textContent = `Audio uploaded successfully! Transcription ID: ${data.transcription_id || 'N/A'}`;
+        audioUploadStatus.textContent = `Audio uploaded successfully! Transcription ID: ${data.filename|| 'N/A'}`;
         audioUploadStatus.classList.add('success');
         // Optionally store transcription_id or handle as needed
       } else {
