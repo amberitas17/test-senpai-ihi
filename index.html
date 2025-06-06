@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
       uploadStatus.classList.remove('error');
       uploadStatus.classList.add('success');
 
-      const response = await fetch('https://ihisenpai-f2bzdycuf2cmhnc2.swedencentral-01.azurewebsites.net/upload-file', {
+      const response = await fetch('https://ihisenpai2-epabadgjb5hmdra4.swedencentral-01.azurewebsites.net/upload-file', {
         method: 'POST',
         body: formData,
       });
@@ -206,7 +206,7 @@ audioUploadForm.addEventListener('submit', async function (event) {
     audioUploadStatus.classList.remove('error');
     audioUploadStatus.classList.add('success');
 
-    const response = await fetch('https://ihisenpai-f2bzdycuf2cmhnc2.swedencentral-01.azurewebsites.net/audio-transcribe', {
+    const response = await fetch('https://ihisenpai2-epabadgjb5hmdra4.swedencentral-01.azurewebsites.net/audio-transcribe', {
       method: 'POST',
       body: formData,
     });
